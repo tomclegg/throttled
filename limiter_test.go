@@ -22,3 +22,23 @@ func (s *Suite) TestLimiter(c *check.C) {
 	l.Wait(10)
 	c.Check(time.Since(t) > 10*time.Millisecond, check.Equals, true)
 }
+
+func ExampleLimiter_Wait() {
+	// allow 100 units per millisecond
+	l := NewLimiter(100, time.Millisecond)
+
+	// these calls will return immediately:
+	l.Wait(10)
+	l.Wait(80)
+
+	// this call will not return until the limiter is 1ms old:
+	l.Wait(11)
+
+	// this call will not return until the limiter is 20ms old:
+	l.Wait(1000)
+
+	time.Sleep(time.Second)
+
+	// this call will block for ~1ms:
+	l.Wait(100)
+}
