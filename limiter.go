@@ -11,6 +11,9 @@ type Limiter struct {
 	done     chan struct{}
 }
 
+// NewLimiter returns a new Limiter that accepts the given flow in the
+// given time interval. It can be shared by multiple goroutines; they
+// will share the available flow.
 func NewLimiter(flow uint64, interval time.Duration) *Limiter {
 	lim := &Limiter{
 		flow:     flow,
@@ -22,7 +25,8 @@ func NewLimiter(flow uint64, interval time.Duration) *Limiter {
 	return lim
 }
 
-// Wait until we're not over-limit, then count flow and return.
+// Wait until we're not over-limit -- i.e., until enough time has
+// passed to admit all previous Waits -- then count flow and return.
 func (lim *Limiter) Wait(flow uint64) {
 	lim.c <- flow
 }
