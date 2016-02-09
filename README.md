@@ -12,7 +12,10 @@ A Limiter can also be used to rate-limit other actions, like sending email
 messages or making database queries.
 
 The bps program is an example: it copies stdin to stdout without exceeding a
-specified speed.
+specified speed. See https://godoc.org/github.com/tomclegg/throttled/bps
+
+    go get github.com/tomclegg/throttled/bps
+    find ~ | bps -bytes 1 -per 3.3ms
 
 
 ### License

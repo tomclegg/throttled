@@ -25,7 +25,11 @@
 // sending email messages or making database queries.
 //
 // The bps program is an example: it copies stdin to stdout without
-// exceeding a specified speed.
+// exceeding a specified speed.  See
+// https://godoc.org/github.com/tomclegg/throttled/bps
+//
+//   go get github.com/tomclegg/throttled/bps
+//   find ~ | bps -bytes 1 -per 3.3ms
 //
 // License
 //
